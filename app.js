@@ -25,15 +25,13 @@ const membersRoutes = require('./routes/members');
 
 const Member = require('./models/member');
 
-// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/crfc';
-
-const dbUrl = 'mongodb://localhost:27017/cfrc';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/crfc';
 
 const store = MongoDBStore.create({
 	mongoUrl: dbUrl,
 	touchAfter: 24 * 60 * 60,
 	crypto: {
-		secret: 'squirrel',
+		secret: process.env.MONGO_DB_STORE_SECRET,
 	},
 });
 
