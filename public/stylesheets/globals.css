@@ -26,11 +26,12 @@
 	width: 100px;
 }
 
-@media (min-width: 768px) {
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-@media (min-width: 814px) {
-}
-
-@media (min-width: 912px) {
+.footer-icon {
+	width: 64px;
 }
