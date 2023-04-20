@@ -25,7 +25,8 @@ const membersRoutes = require('./routes/members');
 
 const Member = require('./models/member');
 
-const dbUrl = process.env.DB_URL;
+// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/crfc';
+const dbUrl = 'mongodb://localhost:27017/cfrc';
 
 const store = MongoDBStore.create({
 	mongoUrl: dbUrl,
