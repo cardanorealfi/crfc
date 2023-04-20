@@ -1,0 +1,74 @@
+body {
+	height: 100vh;
+}
+
+img {
+	max-width: 50vw;
+}
+
+.cover-container {
+	max-width: 60vw;
+	color: black;
+}
+
+.nav-link {
+	padding: 0.25rem 0;
+	font-weight: 500;
+	color: rgba(2, 2, 2, 0.5);
+	margin-left: 1rem;
+	border-bottom: 0.125rem solid transparent;
+}
+
+.nav-link:hover {
+	color: rgb(0, 0, 0);
+}
+
+.nav-link.active {
+	color: white;
+}
+
+.lead {
+	font-weight: 700;
+	text-align: start;
+}
+
+.btn-primary,
+.btn-primary:hover {
+	color: black;
+	text-shadow: none;
+}
+
+.footer-icon {
+	margin-bottom: 0.25em;
+	width: 64px;
+}
+
+footer p {
+	display: inline-block;
+}
+
+@media (min-width: 740px) {
+	.hero {
+		flex-direction: row !important;
+	}
+
+	.hero-text-col {
+		align-content: end !important;
+	}
+
+	.lead {
+		font-size: 2em;
+		float: right !important;
+		text-align: end !important;
+	}
+
+	.hero-btn {
+		float: right !important;
+	}
+	.nav-link:hover {
+		border-bottom-color: rgba(0, 0, 0, 0.5);
+	}
+	.nav-link.active {
+		border-bottom-color: rgba(0, 0, 0, 0.5);
+	}
+} ;

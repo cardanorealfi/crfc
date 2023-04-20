@@ -1,0 +1,36 @@
+.user-card {
+	min-width: 50vw;
+}
+
+.icon {
+	width: 100px;
+}
+
+.attribution {
+	font-size: 0.5rem;
+}
+
+.position-relative {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.member-card-img {
+	object-fit: cover;
+	object-position: center;
+}
+
+.resource-icon {
+	width: 100px;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 814px) {
+}
+
+@media (min-width: 912px) {
+}
