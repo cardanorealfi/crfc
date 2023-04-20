@@ -1,0 +1,84 @@
+<% layout('layouts/boilerplate')%>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+	<div class="row">
+		<div class="card shadow py-5">
+			<div class="card-body">
+				<h1 class="text-center card-title">Edit member</h1>
+				<form
+					action="/members/<%= member._id %>?_method=PUT"
+					method="POST"
+					novalidate
+					enctype="multipart/form-data"
+					class="validated-form needs-validation">
+					<div class="mb-3">
+						<label class="form-label" for="logo">Project logo</label>
+						<input
+							class="form-control text-body-secondary"
+							type="file"
+							name="logo"
+							id="logo"
+							value="<%= member.logo %>" />
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="project">Project name</label>
+						<input
+							class="form-control text-body-secondary"
+							type="text"
+							name="member[project]"
+							id="project"
+							value="<%= member.project %>"
+							required />
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="url">Project website</label>
+						<input
+							class="form-control text-body-secondary"
+							type="text"
+							name="member[url]"
+							id="url"
+							value="<%= member.url %>"
+							required />
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="description"
+							>Project description</label
+						>
+						<textarea
+							class="form-control text-body-secondary"
+							type="text"
+							name="member[description]"
+							id="description"
+							value="<%= member.description %>"
+							required>
+							<%= member.description %>
+						</textarea
+						>
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="status">Project status</label>
+						<select class="form-select" name="member[status]" id="status">
+							<option selected>Status</option>
+							<% if (member.status === 'Active') { %>
+							<option value="Active" selected>Active</option>
+							<% } else { %>
+							<option value="Active">Active</option>
+							<% } %> <% if (member.status === 'Inactive') { %>
+							<option value="Inactive" selected>Not active</option>
+							<% } else { %>
+							<option value="Inactive">Not active</option>
+							<% } %> <% if (member.status === 'Voting member') { %>
+							<option value="Voting member" selected>Voting member</option>
+							<% } else { %>
+							<option value="Voting member">Voting member</option>
+							<% } %>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-success mb-3"
+						>Update project</button
+					>
+				</form>
+				<a class="btn btn-primary" href="/members">Back</a>
+			</div>
+		</div>
+	</div>
+</div>

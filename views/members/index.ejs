@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate')%>
+<div class="container members-container">
+	<h1>Members</h1>
+	<div>
+		<a class="btn btn-primary" href="/members/new">Add member</a>
+	</div>
+
+	<div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+		<% for (let member of members) {%>
+		<div class="col">
+			<div class="card h-100 d-flex flex-column">
+				<div class="position-relative">
+					<img
+						src="<%= member.logo.url %>"
+						alt="<%= member.project %>"
+						class="card-img-top p-5 member-card-img"
+						crossorigin="anonymous" />
+				</div>
+
+				<div
+					class="card-body d-flex flex-column align-items-stretch flex-grow-1">
+					<div class="flex-grow-1"></div>
+					<h5 class="card-title"><%= member.project %></h5>
+					<div class="my-2">
+						<a href="/members/<%= member._id %>" class="btn btn-primary"
+							>More information</a
+						>
+						<a href="<%= member.url %>" class="btn btn-link">Visit website</a>
+					</div>
+					<div class="d-flex align-items-center my-2">
+						<span class="card-text align-baseline me-2">Status</span>
+						<% if(member.status === 'Active') {%>
+						<span class="badge bg-success">active</span>
+						<%} else if(member.status === 'Inactive') {%>
+						<span class="badge bg-danger">Not active</span>
+						<% } else if(member.status === 'Voting member') {%>
+						<span class="badge bg-info">Voting member</span>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<% } %>
+	</div>
+</div>

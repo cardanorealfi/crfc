@@ -1,0 +1,50 @@
+<% layout('layouts/boilerplate')%>
+<div class="row col-md-6 offset-md-3 my-3">
+	<div class="card border-0">
+		<img
+			src="<%= member.logo.url %>"
+			class="card-img-top"
+			alt="<%= member.project %>"
+			crossorigin="anonymous" />
+		<div class="card-body">
+			<h5 class="card-title"><%= member.project %></h5>
+			<p class="card-text"><%= member.description %></p>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				Submitted by: <%= member.author.username %>
+			</li>
+			<li class="list-group-item">
+				<a href="<%= member.url %>">Visit official website</a>
+			</li>
+			<li class="list-group-item">
+				<div class="d-flex align-items-center my-2">
+					<span class="card-text align-baseline me-2">Status</span>
+					<% if(member.status === 'Active') {%>
+					<span class="badge bg-success">active</span>
+					<%} else if(member.status === 'Inactive') {%>
+					<span class="badge bg-danger">Not active</span>
+					<% } else if(member.status === 'Voting member') {%>
+					<span class="badge bg-info">Voting member</span>
+					<% } %>
+				</div>
+			</li>
+		</ul>
+		<% if( currentUser && member.author.equals(currentUser._id)) {%>
+		<div class="card-body">
+			<a class="btn btn-warning me-2" href="/members/<%= member._id %>/edit"
+				>Edit</a
+			>
+			<form
+				class="d-inline"
+				action="/members/<%= member._id %>?_method=DELETE"
+				method="POST">
+				<button class="card-link btn btn-danger">Delete</button>
+			</form>
+		</div>
+		<% } %>
+		<div class="card-footer">
+			<a class="btn btn-primary" href="/members" class="card-link">Back</a>
+		</div>
+	</div>
+</div>

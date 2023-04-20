@@ -1,0 +1,67 @@
+<% layout('layouts/boilerplate')%>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+	<div class="row">
+		<div class="card shadow py-5">
+			<div class="card-body">
+				<h1 class="card-title text-center">New member</h1>
+				<form
+					action="/members"
+					method="POST"
+					novalidate
+					class="validated-form needs-validation"
+					enctype="multipart/form-data">
+					<div class="mb-3">
+						<label for="logo" class="form-label">Project logo</label>
+						<input class="form-control" type="file" id="logo" name="logo" />
+						<div class="valid-feedback">Looks good!</div>
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="project">Project name</label>
+						<input
+							class="form-control"
+							type="text"
+							name="member[project]"
+							id="project"
+							required />
+					</div>
+					<div class="valid-feedback">Looks good!</div>
+					<div class="mb-3">
+						<label class="form-label" for="url">Project website</label>
+						<input
+							class="form-control"
+							type="text"
+							name="member[url]"
+							id="url"
+							required />
+					</div>
+					<div class="valid-feedback">Looks good!</div>
+					<div class="mb-3">
+						<label class="form-label" for="description"
+							>Project description</label
+						>
+						<textarea
+							class="form-control"
+							type="text"
+							name="member[description]"
+							id="description"
+							required></textarea>
+						<div class="valid-feedback">Looks good!</div>
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="status">Project status</label>
+						<select class="form-select" name="member[status]" id="status">
+							<option selected>Status</option>
+							<option>Active</option>
+							<option>Not active</option>
+							<option>Voting member</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-success mb-3"
+						>Add project</button
+					>
+				</form>
+				<a class="btn btn-primary" href="/members">Back</a>
+			</div>
+		</div>
+	</div>
+</div>
