@@ -25,18 +25,8 @@ const membersRoutes = require('./routes/members');
 
 const Member = require('./models/member');
 
-// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/crfc';
-const dbUrl = 'mongodb://localhost:27017/cfrc';
-
-const store = MongoDBStore.create({
-	mongoUrl: dbUrl,
-	touchAfter: 24 * 60 * 60,
-	crypto: {
-		secret: process.env.MONGO_DB_STORE_SECRET,
-	},
-});
-
-store.on('error', (e) => console.log('session store error', e));
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/crfc';
+// const dbUrl = 'mongodb://localhost:27017/cfrc';
 
 mongoose.connect(dbUrl);
 
@@ -45,6 +35,18 @@ db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', () => {
 	console.log('Database connected');
 });
+
+const secret = process.env.SECRET;
+
+const store = MongoDBStore.create({
+	mongoUrl: dbUrl,
+	touchAfter: 24 * 60 * 60,
+	crypto: {
+		secret,
+	},
+});
+
+store.on('error', (e) => console.log('session store error', e));
 
 const app = express();
 
@@ -120,7 +122,7 @@ app.use(
 const sessionConfig = {
 	store,
 	name: 'session_crfc',
-	secret: process.env.SESSION_SECRET,
+	secret,
 	resave: false,
 	saveUninitialized: true,
 	cookie: {
