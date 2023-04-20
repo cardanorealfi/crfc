@@ -27,33 +27,32 @@ const Joi = BaseJoi.extend(extension);
 module.exports.memberSchema = Joi.object({
 	member: Joi.object({
 		project: Joi.string().required().escapeHTML(),
-		logo: Joi.alternatives()
-			.try(
-				Joi.string()
-					.uri({ scheme: ['http', 'https'] })
-					.escapeHTML(),
-				Joi.binary()
-					.encoding('base64')
-					.strict()
-					.label('Image file')
-					.custom((value, helpers) => {
-						const validFormats = ['jpg', 'jpeg', 'png'];
-						const fileFormat = helpers.originalName
-							.split('.')
-							.pop()
-							.toLowerCase();
+		// logo: Joi.alternatives()
+		// 	.try(
+		// 		Joi.string()
+		// 			.uri({ scheme: ['http', 'https'] })
+		// 			.escapeHTML(),
+		// 		Joi.binary()
+		// 			.encoding('base64')
+		// 			.strict()
+		// 			.label('Image file')
+		// 			.custom((value, helpers) => {
+		// 				const validFormats = ['jpg', 'jpeg', 'png'];
+		// 				const fileFormat = helpers.originalName
+		// 					.split('.')
+		// 					.pop()
+		// 					.toLowerCase();
 
-						if (!validFormats.includes(fileFormat)) {
-							return helpers.error(
-								'Logo file format must be one of ' + validFormats.join(', ')
-							);
-						}
+		// 				if (!validFormats.includes(fileFormat)) {
+		// 					return helpers.error(
+		// 						'Logo file format must be one of ' + validFormats.join(', ')
+		// 					);
+		// 				}
 
-						return value;
-					}, 'Logo format validation')
-					.max(5 * 1024 * 1024)
-			)
-			.required(),
+		// 				return value;
+		// 			}, 'Logo format validation')
+		// 			.max(5 * 1024 * 1024)
+		// 	)
 		url: Joi.string()
 			.uri({ scheme: ['http', 'https'] })
 			.escapeHTML()
