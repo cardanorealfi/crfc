@@ -20,6 +20,7 @@
 .member-card-img {
 	object-fit: cover;
 	object-position: center;
+	padding: 10vw;
 }
 
 .resource-icon {
@@ -34,4 +35,10 @@ footer {
 
 .footer-icon {
 	width: 64px;
+}
+
+@media (min-width: 764px) {
+	.member-card-img {
+		padding: 5vw;
+	}
 }
