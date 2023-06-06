@@ -120,6 +120,7 @@ app.use(
 );
 
 const sessionConfig = {
+	store,
 	name: 'session_crfc',
 	secret,
 	resave: false,
