@@ -18,24 +18,13 @@ const mongoSanitize = require('express-mongo-sanitize');
 const MongoDBStore = require('connect-mongo');
 const helmet = require('helmet');
 
-const User = require('./models/user');
-
-const userRoutes = require('./routes/users');
-const membersRoutes = require('./routes/members');
-
-const Member = require('./models/member');
-
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/cfrc';
-// const dbUrl = 'mongodb://localhost:27017/cfrc';
-
 mongoose.connect(dbUrl);
-
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', () => {
 	console.log('Database connected');
 });
-
 const secret = process.env.SECRET;
 
 const store = MongoDBStore.create({
@@ -45,8 +34,16 @@ const store = MongoDBStore.create({
 		secret,
 	},
 });
-
 store.on('error', (e) => console.log('session store error', e));
+
+const User = require('./models/user');
+
+const userRoutes = require('./routes/users');
+const membersRoutes = require('./routes/members');
+
+const Member = require('./models/member');
+
+// const dbUrl = 'mongodb://localhost:27017/cfrc';
 
 const app = express();
 
