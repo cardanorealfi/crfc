@@ -8,23 +8,41 @@ const mongoose = require('mongoose');
 const engine = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
-const { memberSchema } = require('./schemas');
-const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const mongoSanitize = require('express-mongo-sanitize');
-const MongoDBStore = require('connect-mongo');
+const User = require('./models/user');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const userRoutes = require('./routes/users');
+const membersRoutes = require('./routes/members');
+
+const { memberSchema } = require('./schemas');
+const catchAsync = require('./utils/catchAsync');
+
+const MongoDBStore = require('connect-mongo');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/cfrc';
+// const dbUrl = 'mongodb://localhost:27017/cfrc';
+
 mongoose.connect(dbUrl);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', () => {
 	console.log('Database connected');
 });
+
+const app = express();
+app.engine('ejs', engine);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongoSanitize());
+
 const secret = process.env.SECRET;
 
 const store = MongoDBStore.create({
@@ -36,27 +54,22 @@ const store = MongoDBStore.create({
 });
 store.on('error', (e) => console.log('session store error', e));
 
-const User = require('./models/user');
+const sessionConfig = {
+	store,
+	name: 'session_crfc',
+	secret,
+	resave: false,
+	saveUninitialized: true,
+	cookie: {
+		httpOnly: true,
+		secure: false,
+		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+		maxAge: 1000 * 60 * 60 * 24 * 7,
+	},
+};
 
-const userRoutes = require('./routes/users');
-const membersRoutes = require('./routes/members');
-
-const Member = require('./models/member');
-
-// const dbUrl = 'mongodb://localhost:27017/cfrc';
-
-const app = express();
-
-app.engine('ejs', engine);
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-app.use(mongoSanitize());
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session(sessionConfig));
+app.use(flash());
 app.use(helmet());
 
 const scriptSrcUrls = [
@@ -116,25 +129,8 @@ app.use(
 	})
 );
 
-const sessionConfig = {
-	store,
-	name: 'session_crfc',
-	secret,
-	resave: false,
-	saveUninitialized: true,
-	cookie: {
-		httpOnly: true,
-		secure: true,
-		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-		maxAge: 1000 * 60 * 60 * 24 * 7,
-	},
-};
-
-app.use(session(sessionConfig));
-app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
