@@ -24,7 +24,6 @@ const catchAsync = require('./utils/catchAsync');
 const MongoDBStore = require('connect-mongo');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/cfrc';
-// const dbUrl = 'mongodb://localhost:27017/cfrc';
 
 mongoose.connect(dbUrl);
 const db = mongoose.connection;
