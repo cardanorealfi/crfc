@@ -26,6 +26,7 @@ const MongoDBStore = require('connect-mongo');
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/cfrc';
 
 mongoose.connect(dbUrl);
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', () => {
@@ -33,6 +34,7 @@ db.once('open', () => {
 });
 
 const app = express();
+
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -61,7 +63,7 @@ const sessionConfig = {
 	saveUninitialized: true,
 	cookie: {
 		httpOnly: true,
-		secure: true,
+		secure: false,
 		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
 		maxAge: 1000 * 60 * 60 * 24 * 7,
 	},
