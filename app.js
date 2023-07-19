@@ -14,6 +14,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const helmet = require('helmet');
+const nodemailer = require('nodemailer');
 const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./routes/users');
 const membersRoutes = require('./routes/members');
@@ -138,6 +139,18 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+const password = process.env.GMAIL_PASSWORD;
+
+const transporter = nodemailer.createTransport({
+	service: 'Gmail',
+	auth: {
+		user: 'realficardano@gmail.com',
+		pass: password,
+	},
+});
+
+app.locals.transporter = transporter;
 
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
