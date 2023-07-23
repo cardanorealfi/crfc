@@ -15,6 +15,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const helmet = require('helmet');
 const nodemailer = require('nodemailer');
+const { v4: uuidv4 } = require('uuid');
 const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./routes/users');
 const membersRoutes = require('./routes/members');
@@ -24,8 +25,8 @@ const catchAsync = require('./utils/catchAsync');
 
 const MongoDBStore = require('connect-mongo');
 
-// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/cfrc';
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/cfrc';
+// const dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl);
 
@@ -143,19 +144,21 @@ passport.deserializeUser(User.deserializeUser());
 const password = process.env.GMAIL_PASSWORD;
 
 const transporter = nodemailer.createTransport({
-	service: 'Gmail',
+	host: 'smtp.forwardemail.net',
+	port: 465,
+	secure: true,
 	auth: {
 		user: 'realficardano@gmail.com',
 		pass: password,
 	},
 });
 
-app.locals.transporter = transporter;
-
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
+	req.transporter = transporter;
+	req.uuidv4 = uuidv4;
 	next();
 });
 
