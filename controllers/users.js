@@ -9,11 +9,11 @@ module.exports.create = async (req, res, next) => {
 		const { email, username, password } = req.body;
 		const user = new User({ email, username });
 
-		// Generate an authentication token
-		const token = generateAuthToken(); // Replace with your token generation logic
+		// Generate a unique token
+		const token = req.uuidv4();
 
 		// Send the authentication email
-		await transporter.sendMail({
+		await req.transporter.sendMail({
 			from: 'realficardano@gmail.com',
 			to: email,
 			subject: 'Account Verification',
@@ -21,7 +21,8 @@ module.exports.create = async (req, res, next) => {
 		});
 
 		// Save the token to the user model or your database for later verification
-
+		user.token = token;
+		await user.save();
 		const registeredUser = await User.register(user, password);
 		req.login(registeredUser, (err) => {
 			if (err) return next(err);
