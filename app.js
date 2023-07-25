@@ -141,23 +141,24 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-const password = process.env.GMAIL_PASSWORD;
+// const password = process.env.GMAIL_PASSWORD;
 
-const transporter = nodemailer.createTransport({
-	service: 'gmail',
-	secure: true,
-	auth: {
-		user: 'realficardano@gmail.com',
-		pass: password,
-	},
-});
+// const transporter = nodemailer.createTransport({
+// 	service: 'gmail',
+// 	port: 587,
+// 	secure: true,
+// 	auth: {
+// 		user: 'realficardano@gmail.com',
+// 		pass: password,
+// 	},
+// });
 
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
-	req.transporter = transporter;
-	req.uuidv4 = uuidv4;
+	// req.transporter = transporter;
+	// req.uuidv4 = uuidv4;
 	next();
 });
 
