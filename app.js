@@ -146,7 +146,7 @@ const password = process.env.GMAIL_PASSWORD;
 const transporter = nodemailer.createTransport({
 	host: 'smtp.forwardemail.net',
 	port: 465,
-	secure: false,
+	secure: true,
 	auth: {
 		user: 'realficardano@gmail.com',
 		pass: password,
