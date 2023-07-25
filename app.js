@@ -106,7 +106,7 @@ const imgSrcUrls = [
 	"'self'",
 	'blob:',
 	'data:',
-	'https://res.cloudinary.com/mayanhavoc/',
+	'https://res.cloudinary.com',
 	'https://real-fi.org/assets/',
 	'https://www.youtube.com',
 ];
