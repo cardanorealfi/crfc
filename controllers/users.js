@@ -10,18 +10,19 @@ module.exports.create = async (req, res, next) => {
 		const user = new User({ email, username });
 
 		// Generate a unique token
-		const token = req.uuidv4();
+		// const token = req.uuidv4();
+		// console.log(token);
 
 		// Send the authentication email
-		await req.transporter.sendMail({
-			from: 'realficardano@gmail.com',
-			to: email,
-			subject: 'Account Verification',
-			text: `Click the following link to verify your account: ${req.headers.origin}/verify?token=${token}`,
-		});
+		// await req.transporter.sendMail({
+		// 	from: 'realficardano@gmail.com',
+		// 	to: email,
+		// 	subject: 'Account Verification',
+		// 	text: `Click the following link to verify your account: ${req.headers.origin}/verify?token=${token}`,
+		// });
 
 		// Save the token to the user model or your database for later verification
-		user.token = token;
+		// user.token = token;
 		await user.save();
 		const registeredUser = await User.register(user, password);
 		req.login(registeredUser, (err) => {
