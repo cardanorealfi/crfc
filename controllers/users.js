@@ -23,7 +23,6 @@ module.exports.create = async (req, res, next) => {
 
 		// Save the token to the user model or your database for later verification
 		// user.token = token;
-		await user.save();
 		const registeredUser = await User.register(user, password);
 		req.login(registeredUser, (err) => {
 			if (err) return next(err);
